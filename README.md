@@ -7,12 +7,34 @@ O **Vacinaí** é um assistente especialista desenvolvido em **Node.js** e **Typ
 ## Componentes da Solução
 
 1. **Chat Especialista (CLI Interativo)**: Interface conversacional interativa em linha de comando que mantém a persona do especialista "Vacinaí", restringe respostas fora do escopo médico de imunização e exibe se a resposta foi obtida do cache ou inferida pelo LLM.
-2. **Motor de Inferência**: Conecta-se aos modelos de linguagem locais rodando no **Ollama** (ex.: `qwen2.5:1.5b`, `llama3.2`) via container ou instalação local.
+2. **Motor de Inferência (Ollama)**: Conecta-se à API local do **Ollama** utilizando o modelo leve `qwen2.5:0.5b` para responder com agilidade às dúvidas dos usuários.
 3. **Cache Semântico Vetorial**: Sistema de cache baseado em embeddings e distância por cosseno com limiar de distância de `0.20` (similaridade cosseno $\ge 0.80$).
-   - Conexão nativa com **ChromaDB** via container Docker na porta `8000`.
-   - Embeddings gerados diretamente pelo modelo de embeddings do **Ollama** (`nomic-embed-text`).
+   - Conexão com o banco vetorial **ChromaDB** via container Docker na porta `8000`.
+   - Embeddings gerados diretamente pelo modelo `nomic-embed-text` no Ollama.
 4. **Base de Conhecimento Estruturada**: Base com dezenas de perguntas e respostas autoritativas sobre o calendário oficial do SUS em `conhecimento/vacinacao.json`.
-5. **Avaliação LLM-as-a-Judge**: Script adicional para julgar a qualidade e adequação das respostas do assistente (`qwen2.5:0.5b`) usando um modelo juiz (`qwen2.5:1.5b`), incluindo testes com alucinações e relatório percentual de adequação.
+5. **Avaliação LLM-as-a-Judge**: Script para avaliar o desempenho e a precisão do assistente especialista (`qwen2.5:0.5b`) utilizando um modelo juiz (`qwen2.5:1.5b`), testando alucinações propositais e gerando métricas de adequação.
+
+---
+
+## Estrutura do Projeto
+
+```text
+vacinai/
+├── conhecimento/
+│   └── vacinacao.json      # Base com perguntas e respostas oficiais do PNI
+├── src/
+│   ├── tipos.ts            # Definições de tipos e interfaces em TypeScript
+│   ├── conhecimento.ts     # Carregamento da base e construção da persona
+│   ├── llm.ts              # Motor de inferência conectado ao Ollama
+│   ├── cache.ts            # Cache semântico integrado ao ChromaDB
+│   ├── chat.ts             # Interface interativa de conversação no terminal
+│   └── julgamento.ts       # Script de avaliação com LLM-as-a-Judge
+├── docker-compose.yml      # Definição dos containers ChromaDB e Ollama
+├── .env.example            # Modelo de configuração das variáveis de ambiente
+├── .env                    # Variáveis de ambiente locais
+├── package.json            # Scripts de execução e dependências
+└── tsconfig.json           # Configurações do compilador TypeScript
+```
 
 ---
 
@@ -56,10 +78,16 @@ docker compose up -d
 
 ### Passo 2: Baixar os modelos no Ollama
 
-Após o container do Ollama iniciar, baixe o modelo de linguagem e o modelo de embeddings:
+Após o container do Ollama iniciar, baixe os modelos necessários:
 
 ```bash
+# Modelo leve para responder as perguntas do especialista
+docker exec -it vacinai-ollama ollama pull qwen2.5:0.5b
+
+# Modelo para atuar como Juiz (LLM-as-a-Judge)
 docker exec -it vacinai-ollama ollama pull qwen2.5:1.5b
+
+# Modelo para geração de embeddings no cache semântico
 docker exec -it vacinai-ollama ollama pull nomic-embed-text
 ```
 
@@ -73,11 +101,13 @@ Copie o arquivo de exemplo para criar seu `.env`:
 cp .env.example .env
 ```
 
-Parâmetros disponíveis no `.env`:
+Conteúdo configurado no `.env`:
 
 ```env
 URL_OLLAMA=http://localhost:11434/v1
-MODELO_OLLAMA=qwen2.5:1.5b
+MODELO_OLLAMA=qwen2.5:0.5b
+MODELO_ASSISTENTE=qwen2.5:0.5b
+MODELO_JULGAMENTO=qwen2.5:1.5b
 URL_CHROMA=http://localhost:8000
 NOME_COLECAO_CACHE=vacinai_cache
 MODELO_EMBEDDING_OLLAMA=nomic-embed-text
@@ -110,7 +140,11 @@ npm start
 
 ### 3. Executar a Avaliação com LLM-as-a-Judge
 
-Para avaliar a adequação das respostas geradas pelo assistente (`qwen2.5:0.5b`) usando o juiz (`qwen2.5:1.5b`) e testar alucinações propositais:
+O script de avaliação executa duas etapas fundamentais:
+1. **Teste de Alucinações**: Envia propositalmente respostas absurdas e incorretas para garantir que o modelo juiz (`qwen2.5:1.5b`) reprove com `NÃO ATENDE`.
+2. **Avaliação do Especialista**: O modelo assistente (`qwen2.5:0.5b`) responde a todas as perguntas da base de vacinação e o juiz avalia a adequação de cada resposta, emitindo um relatório com a taxa percentual de sucesso.
+
+Para executar o julgamento:
 
 ```bash
 npm run julgamento
@@ -118,7 +152,7 @@ npm run julgamento
 
 ---
 
-## Exemplo de Interação
+## Exemplo de Interação no Chat
 
 ```text
 =======================================================
