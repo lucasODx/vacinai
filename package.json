@@ -1,0 +1,31 @@
+{
+  "name": "vacinai",
+  "version": "1.0.0",
+  "description": "Sistema especialista com IA e cache semântico sobre vacinação",
+  "main": "dist/chat.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/chat.js",
+    "dev": "tsx src/chat.ts",
+    "chat": "tsx src/chat.ts"
+  },
+  "keywords": [
+    "vacinacao",
+    "sistema-especialista",
+    "ia",
+    "cache-semantico",
+    "llm"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chromadb": "^1.10.4",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

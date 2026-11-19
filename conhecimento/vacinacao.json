@@ -1,0 +1,114 @@
+[
+  {
+    "pergunta": "O que é o Programa Nacional de Imunizações (PNI)?",
+    "resposta": "O Programa Nacional de Imunizações (PNI) é uma política pública de saúde do Brasil criada em 1973, responsável por coordenar as ações de imunização e disponibilizar vacinas seguras e gratuitas para toda a população pelo SUS."
+  },
+  {
+    "pergunta": "Quais vacinas o recém-nascido deve tomar ao nascer?",
+    "resposta": "Ao nascer, o bebê deve receber a vacina BCG (em dose única, para proteger contra formas graves de tuberculose) e a primeira dose da vacina contra Hepatite B nas primeiras 24 horas de vida."
+  },
+  {
+    "pergunta": "O que é a vacina BCG e para que serve?",
+    "resposta": "A vacina BCG (Bacilo Calmette-Guérin) protege contra as formas graves da tuberculose, como a meningite tuberculosa e a tuberculose miliar. É aplicada por via intradérmica no braço direito, geralmente logo após o nascimento."
+  },
+  {
+    "pergunta": "Por que a vacina BCG deixa uma cicatriz ou marquinha no braço?",
+    "resposta": "A cicatriz da BCG é uma reação esperada à aplicação intradérmica da vacina. Uma pequena mancha vermelha evolui para pústula e crosta em algumas semanas, cicatrizando naturalmente sem necessidade de curativos ou pomadas."
+  },
+  {
+    "pergunta": "O que é a vacina Pentavalente e quais doenças ela previne?",
+    "resposta": "A vacina Pentavalente protege contra cinco doenças graves: difteria, tétano, coqueluche, hepatite B e infecções causadas pela bactéria Haemophilus influenzae tipo b (como meningite e pneumonia)."
+  },
+  {
+    "pergunta": "Quando a vacina Pentavalente deve ser aplicada no bebê?",
+    "resposta": "A vacina Pentavalente deve ser aplicada em três doses: aos 2 meses, aos 4 meses e aos 6 meses de idade."
+  },
+  {
+    "pergunta": "O que é a vacina da Poliomielite e qual o esquema vacinal?",
+    "resposta": "A vacina da Poliomielite protege contra a paralisia infantil. O esquema vacinal recomendado pelo Ministério da Saúde é composto exclusivamente pela Vacina Inativada Poliomielite (VIP), aplicada aos 2, 4 e 6 meses de idade, com reforços aos 15 meses e aos 4 anos."
+  },
+  {
+    "pergunta": "Para que serve a vacina contra o Rotavírus humano e quando tomar?",
+    "resposta": "A vacina contra o Rotavírus protege contra infecções gastrointestinais graves e diarreia severa causada pelo rotavírus em crianças. É administrada por via oral em duas doses: aos 2 meses e aos 4 meses de idade."
+  },
+  {
+    "pergunta": "O que é a vacina Pneumocócica 10-valente?",
+    "resposta": "A vacina Pneumocócica 10-valente (conjugada) protege crianças contra infecções invasivas causadas pela bactéria Streptococcus pneumoniae, como pneumonias, meningites e otites. É administrada aos 2 e 4 meses, com dose de reforço aos 12 meses."
+  },
+  {
+    "pergunta": "O que é a vacina Meningocócica C e qual o calendário de aplicação?",
+    "resposta": "A vacina Meningocócica C protege contra a meningite e meningococcemia causadas pelo meningococo do sorogrupo C. No SUS, é aplicada aos 3 e 5 meses de idade, com uma dose de reforço aos 12 meses."
+  },
+  {
+    "pergunta": "Quem pode tomar a vacina Meningocócica ACWY no SUS?",
+    "resposta": "No SUS, a vacina Meningocócica ACWY conjugada é disponibilizada gratuitamente para adolescentes de 11 a 14 anos de idade, conferindo proteção contra quatro sorogrupos de meningococos: A, C, W e Y."
+  },
+  {
+    "pergunta": "Quem deve tomar a vacina contra Febre Amarela e qual a dosagem?",
+    "resposta": "A vacina de Febre Amarela é indicada no calendário infantil aos 9 meses de idade, com um reforço aos 4 anos. Pessoas a partir de 5 anos de idade que nunca se vacinaram devem tomar uma dose única para proteção por toda a vida."
+  },
+  {
+    "pergunta": "O que é a vacina Tríplice Viral e quais doenças ela combate?",
+    "resposta": "A vacina Tríplice Viral protege contra três doenças virais de fácil contaminação: sarampo, caxumba e rubéola. É aplicada aos 12 meses de idade no calendário básico de vacinação."
+  },
+  {
+    "pergunta": "O que é a vacina Tetra Viral?",
+    "resposta": "A vacina Tetra Viral combina a proteção da Tríplice Viral (sarampo, caxumba e rubéola) com a proteção contra a varicela (catapora), sendo aplicada rotineiramente aos 15 meses de idade."
+  },
+  {
+    "pergunta": "Quando deve ser tomada a vacina contra Hepatite A?",
+    "resposta": "A vacina contra a Hepatite A é aplicada em dose única aos 15 meses de vida na rotina do SUS, ou até menores de 5 anos não vacinados anteriormente."
+  },
+  {
+    "pergunta": "Quem deve tomar a vacina contra o HPV e qual o público-alvo?",
+    "resposta": "A vacina contra o Papilomavírus Humano (HPV) é indicada para meninas e meninos de 9 a 14 anos no SUS em dose única, protegendo contra lesões pré-cancerosas e cânceres de colo de útero, vulva, pênis, ânus e orofaringe, além de verrugas genitais."
+  },
+  {
+    "pergunta": "O que é a vacina dTpa e por que ela é indicada para gestantes?",
+    "resposta": "A vacina dTpa protege contra difteria, tétano e coqueluche acelular. É recomendada para todas as gestantes a partir da 20ª semana a cada gravidez, permitindo a transferência de anticorpos maternos para proteger o bebê nos primeiros meses de vida."
+  },
+  {
+    "pergunta": "De quanto em quanto tempo adultos devem tomar a vacina contra Tétano e Difteria (dT)?",
+    "resposta": "Após completar o esquema básico de três doses, adultos devem receber uma dose de reforço da vacina dupla adulto (dT) a cada 10 anos, ou a cada 5 anos em caso de ferimentos graves ou de risco."
+  },
+  {
+    "pergunta": "Quem deve tomar a vacina contra a gripe (Influenza) anualmente?",
+    "resposta": "A vacina contra a influenza é recomendada anualmente, priorizando idosos a partir de 60 anos, crianças de 6 meses a menores de 6 anos, gestantes, puérperas, trabalhadores da saúde, professores e pessoas com comorbidades, sendo estendida à população geral conforme disponibilidade."
+  },
+  {
+    "pergunta": "A vacina da gripe pode provocar gripe em quem a toma?",
+    "resposta": "Não. A vacina contra a gripe é formulada com vírus inativados (mortos e fragmentados), sendo biologicamente incapaz de causar a infecção por gripe."
+  },
+  {
+    "pergunta": "Quem já teve Covid-19 precisa se vacinar contra o coronavírus?",
+    "resposta": "Sim. A imunidade adquirida após a infecção natural diminui com o passar do tempo e não garante proteção suficiente contra novas variantes. A vacinação reforça a resposta imune e previne quadros graves e hospitalizações."
+  },
+  {
+    "pergunta": "As vacinas causam autismo?",
+    "resposta": "Não. Não existe nenhuma relação causal entre vacinas e autismo. Essa alegação surgiu de um artigo britânico fraudulento de 1998 que foi totalmente desmentido e retratado pela comunidade médica e científica internacional após inúmeros estudos com milhões de indivíduos."
+  },
+  {
+    "pergunta": "Quais são as reações adversas mais comuns após a vacinação?",
+    "resposta": "As reações mais frequentes são leves e temporárias, incluindo dor, calor e inchaço no local da injeção, febre baixa, sonolência ou mal-estar leve, que geralmente desaparecem espontaneamente em 24 a 48 horas."
+  },
+  {
+    "pergunta": "Crianças com febre leve ou resfriado comum podem se vacinar?",
+    "resposta": "Sintomas leves de resfriado ou coriza sem febre alta não contraindicam a vacinação. Caso a pessoa apresente febre moderada a alta ou doença aguda moderada/grave, recomenda-se adiar a vacinação até a recuperação do quadro."
+  },
+  {
+    "pergunta": "O que é a imunidade de rebanho ou imunidade coletiva?",
+    "resposta": "A imunidade coletiva ocorre quando uma parcela significativa da população está vacinada contra determinado patógeno, reduzindo drasticamente a circulação do agente infeccioso e protegendo indiretamente pessoas vulneráveis que não podem ser vacinadas por razões médicas."
+  },
+  {
+    "pergunta": "Onde a população pode tomar vacinas gratuitamente no Brasil?",
+    "resposta": "Qualquer cidadão pode receber todas as vacinas do calendário oficial gratuitamente nas salas de vacinação das Unidades Básicas de Saúde (UBS) e postos de saúde da rede pública do SUS em todo o território nacional."
+  },
+  {
+    "pergunta": "Quais documentos são necessários levar para se vacinar em uma UBS?",
+    "resposta": "Recomenda-se levar a caderneta ou cartão de vacinação, um documento oficial com foto e, se possível, o cartão SUS ou CPF para registro adequado no sistema de informação em saúde."
+  },
+  {
+    "pergunta": "Quem pode tomar a vacina contra a Dengue no SUS?",
+    "resposta": "No SUS, a vacina contra a dengue (Qdenga) foi incorporada prioritariamente para crianças e adolescentes de 10 a 14 anos residentes em municípios selecionados com alta taxa de transmissão e incidência da doença."
+  }
+]
