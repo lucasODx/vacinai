@@ -13,7 +13,7 @@ async function executar(): Promise<void> {
     console.error("Falha ao iniciar conexão com o modelo de linguagem.");
     return;
   }
-  console.log(`Motor de inferência iniciado (Provedor: ${statusLLM.configuracao.provedor.toUpperCase()}).`);
+  console.log(`Motor de inferência iniciado (Modelo: ${statusLLM.configuracao.modeloOllama}).`);
 
   const statusConhecimento = await carregarConhecimento();
   if (!statusConhecimento.carregado) {

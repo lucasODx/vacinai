@@ -7,19 +7,17 @@ O **Vacinaí** é um assistente especialista desenvolvido em **Node.js** e **Typ
 ## Componentes da Solução
 
 1. **Chat Especialista (CLI Interativo)**: Interface conversacional interativa em linha de comando que mantém a persona do especialista "Vacinaí", restringe respostas fora do escopo médico de imunização e exibe se a resposta foi obtida do cache ou inferida pelo LLM.
-2. **Motor de Inferência**: Conecta-se a grandes modelos de IA com suporte flexível para:
-   - **Ollama local** (ex.: `qwen2.5:1.5b`, `llama3.2`) rodando localmente ou via container.
-   - **Google Gemini** (ex.: `gemini-2.5-flash`, `gemini-1.5-flash`) via chave de API.
+2. **Motor de Inferência**: Conecta-se aos modelos de linguagem locais rodando no **Ollama** (ex.: `qwen2.5:1.5b`, `llama3.2`) via container ou instalação local.
 3. **Cache Semântico Vetorial**: Sistema de cache baseado em embeddings e distância por cosseno com limiar de distância de `0.20` (similaridade cosseno $\ge 0.80$).
    - Conexão nativa com **ChromaDB** via container Docker na porta `8000`.
-   - Armazenamento persistente local em arquivo JSON (`cache/vacinai_cache.json`) integrado para garantir funcionamento contínuo.
+   - Embeddings gerados diretamente pelo modelo de embeddings do **Ollama** (`nomic-embed-text`).
 4. **Base de Conhecimento Estruturada**: Base com dezenas de perguntas e respostas autoritativas sobre o calendário oficial do SUS em `conhecimento/vacinacao.json`.
 
 ---
 
 ## Como Subir e Preparar os Containers
 
-O projeto já inclui um arquivo `docker-compose.yml` pré-configurado com os serviços necessários:
+O projeto inclui um arquivo `docker-compose.yml` pré-configurado com os serviços necessários:
 
 ```yaml
 services:
@@ -57,17 +55,11 @@ docker compose up -d
 
 ### Passo 2: Baixar os modelos no Ollama
 
-Após o container do Ollama iniciar, baixe o modelo de linguagem e o modelo de embeddings desejados:
+Após o container do Ollama iniciar, baixe o modelo de linguagem e o modelo de embeddings:
 
 ```bash
 docker exec -it vacinai-ollama ollama pull qwen2.5:1.5b
 docker exec -it vacinai-ollama ollama pull nomic-embed-text
-```
-
-Se preferir usar o modelo `llama3.2` ou outro modelo:
-
-```bash
-docker exec -it vacinai-ollama ollama pull llama3.2
 ```
 
 ---
@@ -83,22 +75,12 @@ cp .env.example .env
 Parâmetros disponíveis no `.env`:
 
 ```env
-PROVEDOR_LLM=ollama
 URL_OLLAMA=http://localhost:11434/v1
 MODELO_OLLAMA=qwen2.5:1.5b
-CHAVE_API_GEMINI=
-MODELO_GEMINI=gemini-2.5-flash
-PROVEDOR_ARMAZENAMENTO_CACHE=local
-PROVEDOR_EMBEDDING=local
 URL_CHROMA=http://localhost:8000
 NOME_COLECAO_CACHE=vacinai_cache
-LIMIAR_DISTANCIA_CACHE=0.20
-CAMINHO_CACHE_LOCAL=cache/vacinai_cache.json
 MODELO_EMBEDDING_OLLAMA=nomic-embed-text
-MODELO_EMBEDDING_GEMINI=text-embedding-004
 ```
-
-> **Dica**: Se quiser utilizar o Google Gemini em vez do Ollama, defina `PROVEDOR_LLM=gemini` e informe sua chave em `CHAVE_API_GEMINI`.
 
 ---
 

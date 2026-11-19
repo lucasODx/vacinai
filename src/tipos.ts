@@ -18,12 +18,7 @@ export interface ResultadoLLM {
   };
 }
 
-export type TipoProvedorLLM = "ollama" | "gemini";
-
 export interface ConfiguracaoLLM {
-  provedor: TipoProvedorLLM;
   urlOllama: string;
   modeloOllama: string;
-  chaveGemini: string;
-  modeloGemini: string;
 }

@@ -21,22 +21,6 @@ export function gerarIdCache(pergunta: string): string {
 }
 
 export async function gerarEmbedding(texto: string): Promise<number[]> {
-  const chaveGemini = process.env.CHAVE_API_GEMINI || process.env.GOOGLE_API_KEY;
-
-  if (chaveGemini) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${chaveGemini}`;
-    const resposta = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "models/text-embedding-004",
-        content: { parts: [{ text: texto }] },
-      }),
-    });
-    const dados = (await resposta.json()) as { embedding?: { values?: number[] } };
-    return dados?.embedding?.values || [];
-  }
-
   const urlBase = URL_OLLAMA.replace(/\/v1\/?$/, "");
   const resposta = await fetch(`${urlBase}/api/embeddings`, {
     method: "POST",
