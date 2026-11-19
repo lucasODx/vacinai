@@ -12,6 +12,7 @@ O **Vacinaí** é um assistente especialista desenvolvido em **Node.js** e **Typ
    - Conexão nativa com **ChromaDB** via container Docker na porta `8000`.
    - Embeddings gerados diretamente pelo modelo de embeddings do **Ollama** (`nomic-embed-text`).
 4. **Base de Conhecimento Estruturada**: Base com dezenas de perguntas e respostas autoritativas sobre o calendário oficial do SUS em `conhecimento/vacinacao.json`.
+5. **Avaliação LLM-as-a-Judge**: Script adicional para julgar a qualidade e adequação das respostas do assistente (`qwen2.5:0.5b`) usando um modelo juiz (`qwen2.5:1.5b`), incluindo testes com alucinações e relatório percentual de adequação.
 
 ---
 
@@ -105,6 +106,14 @@ Ou compilar e iniciar a versão de produção:
 ```bash
 npm run build
 npm start
+```
+
+### 3. Executar a Avaliação com LLM-as-a-Judge
+
+Para avaliar a adequação das respostas geradas pelo assistente (`qwen2.5:0.5b`) usando o juiz (`qwen2.5:1.5b`) e testar alucinações propositais:
+
+```bash
+npm run julgamento
 ```
 
 ---

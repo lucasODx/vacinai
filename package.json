@@ -8,14 +8,16 @@
     "build": "tsc",
     "start": "node dist/chat.js",
     "dev": "tsx src/chat.ts",
-    "chat": "tsx src/chat.ts"
+    "chat": "tsx src/chat.ts",
+    "julgamento": "tsx src/julgamento.ts"
   },
   "keywords": [
     "vacinacao",
     "sistema-especialista",
     "ia",
     "cache-semantico",
-    "llm"
+    "llm",
+    "llm-as-a-judge"
   ],
   "author": "",
   "license": "ISC",

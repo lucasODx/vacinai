@@ -6,7 +6,7 @@ config();
 export function obterConfiguracaoLLM(): ConfiguracaoLLM {
   return {
     urlOllama: process.env.URL_OLLAMA || "http://localhost:11434/v1",
-    modeloOllama: process.env.MODELO_OLLAMA || "qwen2.5:1.5b",
+    modeloOllama: process.env.MODELO_OLLAMA || "qwen2.5:0.5b",
   };
 }
 
