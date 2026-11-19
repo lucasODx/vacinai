@@ -8,36 +8,14 @@ export const MODELO_ASSISTENTE =
 export const MODELO_JULGAMENTO =
   process.env.MODELO_JULGAMENTO || "qwen2.5:1.5b";
 
-export function iniciarPersonaJulgamento(
-  conhecimento: ItemConhecimento[]
-): Mensagem[] {
-  const persona: Mensagem[] = [
+export function iniciarPersonaJulgamento(): Mensagem[] {
+  return [
     {
       role: "system",
       content:
-        "Você é um especialista, perito, em vacinação, imunização e no Programa Nacional de Imunizações (PNI).",
-    },
-    {
-      role: "system",
-      content:
-        "Sua função é avaliar se uma determinada resposta responde adequadamente uma pergunta sobre vacinas e imunização.",
+        "Você é um especialista e juiz avaliador em vacinação e no Programa Nacional de Imunizações (PNI). Sua função é avaliar se uma determinada resposta responde adequadamente à pergunta feita, considerando a resposta de referência esperada. A sua resposta deve conter APENAS 'ATENDE' ou 'NÃO ATENDE'. Não explique o seu julgamento.",
     },
   ];
-
-  for (const item of conhecimento) {
-    persona.push({
-      role: "system",
-      content: `Caso a pergunta seja '${item.pergunta}' ou algo parecido, você deve verificar se a resposta é '${item.resposta}' ou algo parecido.`,
-    });
-  }
-
-  persona.push({
-    role: "system",
-    content:
-      "A sua resposta deve conter APENAS uma string que informe, 'ATENDE', se a resposta responde a pergunta e 'NÃO ATENDE' se a resposta não responde a pergunta. Não é necessário explicar o seu julgamento.",
-  });
-
-  return persona;
 }
 
 export async function avaliarAlucinacoes(
@@ -63,17 +41,19 @@ export async function avaliarAlucinacoes(
 
   console.log("\n--- INICIANDO AVALIAÇÃO DE ALUCINAÇÕES ---");
 
-  for (const alucinacao of alucinacoes) {
-    const { pergunta, resposta } = alucinacao;
+  for (let i = 0; i < alucinacoes.length; i++) {
+    const { pergunta, resposta } = alucinacoes[i];
 
-    console.log(`\nJulgando a resposta '${resposta}' para a pergunta '${pergunta}'`);
+    console.log(`\n[Alucinação ${i + 1}/${alucinacoes.length}]`);
+    console.log(`Pergunta: "${pergunta}"`);
+    console.log(`Resposta incorreta: "${resposta}"`);
 
     const resultado = await obterResposta(
       [
         ...julgador,
         {
           role: "user",
-          content: `pergunta '${pergunta}', resposta '${resposta}'`,
+          content: `Pergunta: '${pergunta}'\nResposta a ser avaliada: '${resposta}'`,
         },
       ],
       { modeloOllama: MODELO_JULGAMENTO }
@@ -84,13 +64,13 @@ export async function avaliarAlucinacoes(
     }
 
     const julgamento = resultado.resposta.toUpperCase();
-    console.log(`Resposta do julgador: ${julgamento}`);
+    console.log(`Resultado do juiz: ${julgamento}`);
 
     if (!julgamento.includes("NÃO ATENDE") && !julgamento.includes("NAO ATENDE")) {
       throw new Error("O juiz falhou em reprovar a alucinação!");
     }
 
-    console.log("✓ A alucinação foi julgada insatisfatória (NÃO ATENDE).");
+    console.log("✓ Julgada insatisfatória (NÃO ATENDE) com sucesso.");
   }
 }
 
@@ -101,15 +81,16 @@ export async function julgarAssistente(
 ): Promise<void> {
   console.log("\n--- INICIANDO JULGAMENTO DO ASSISTENTE ESPECIALISTA ---");
   console.log(`Modelo Assistente: ${MODELO_ASSISTENTE}`);
-  console.log(`Modelo Juiz (LLM-as-a-Judge): ${MODELO_JULGAMENTO}\n`);
+  console.log(`Modelo Juiz (LLM-as-a-Judge): ${MODELO_JULGAMENTO}`);
+  console.log(`Total de perguntas a avaliar: ${conhecimento.length}\n`);
 
   let aprovadas = 0;
   let reprovadas = 0;
 
-  for (const item of conhecimento) {
-    const { pergunta } = item;
+  for (let i = 0; i < conhecimento.length; i++) {
+    const { pergunta, resposta: respostaEsperada } = conhecimento[i];
 
-    console.log(`\nPergunta: "${pergunta}"`);
+    console.log(`[${i + 1}/${conhecimento.length}] Avaliando pergunta: "${pergunta}"`);
 
     const resultadoAssistente = await obterResposta(
       [
@@ -123,20 +104,20 @@ export async function julgarAssistente(
     );
 
     if (!resultadoAssistente.sucesso || !resultadoAssistente.resposta) {
-      console.error("Falha ao obter resposta do modelo assistente.");
+      console.error("Falha ao obter resposta do assistente.");
       reprovadas++;
       continue;
     }
 
     const respostaAssistente = resultadoAssistente.resposta;
-    console.log(`Resposta gerada pelo assistente: "${respostaAssistente}"`);
+    console.log(`-> Resposta do assistente: "${respostaAssistente}"`);
 
     const resultadoJuiz = await obterResposta(
       [
         ...julgador,
         {
           role: "user",
-          content: `pergunta '${pergunta}', resposta '${respostaAssistente}'`,
+          content: `Pergunta: '${pergunta}'\nResposta de referência esperada: '${respostaEsperada}'\nResposta a ser avaliada: '${respostaAssistente}'`,
         },
       ],
       { modeloOllama: MODELO_JULGAMENTO }
@@ -149,13 +130,13 @@ export async function julgarAssistente(
     }
 
     const julgamento = resultadoJuiz.resposta.toUpperCase();
-    console.log(`Avaliação do juiz: ${julgamento}`);
+    console.log(`-> Avaliação do juiz: ${julgamento}`);
 
     if (julgamento.includes("NÃO ATENDE") || julgamento.includes("NAO ATENDE")) {
-      console.log("✗ Resposta julgada insatisfatória.");
+      console.log("✗ Não atendeu aos critérios esperados.");
       reprovadas++;
     } else {
-      console.log("✓ Resposta julgada satisfatória (ATENDE).");
+      console.log("✓ Atende adequadamente.");
       aprovadas++;
     }
   }
@@ -188,7 +169,7 @@ export async function executar(): Promise<void> {
   }
   console.log(`Base carregada com ${statusConhecimento.conhecimento.length} perguntas e respostas.`);
 
-  const julgador = iniciarPersonaJulgamento(statusConhecimento.conhecimento);
+  const julgador = iniciarPersonaJulgamento();
   const assistente = iniciarPersonaAssistente(statusConhecimento.conhecimento);
 
   await avaliarAlucinacoes(julgador);

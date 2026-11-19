@@ -28,33 +28,17 @@ export function iniciarPersonaAssistente(
   conhecimento: ItemConhecimento[],
   nomeEspecialista: string = NOME_ESPECIALISTA
 ): Mensagem[] {
-  const persona: Mensagem[] = [
+  const regras = conhecimento
+    .map(
+      (item) =>
+        `- Pergunta: '${item.pergunta}' -> Resposta: '${item.resposta}'`
+    )
+    .join("\n");
+
+  return [
     {
       role: "system",
-      content: `Você é um especialista, perito, em vacinação, imunização e no Programa Nacional de Imunizações (PNI), chamado ${nomeEspecialista}.`,
-    },
-    {
-      role: "system",
-      content:
-        "Se o usuário fizer uma saudação, você deve falar na sua resposta que você é um software, não é um humano, mas que pode ajudar o usuário a entender sobre vacinas e calendário de vacinação.",
-    },
-    {
-      role: "system",
-      content: `O seu nome é ${nomeEspecialista}. Sempre se identifique com esse nome durante saudações.`,
-    },
-    {
-      role: "system",
-      content:
-        "Se o usuário te perguntar algo que não esteja relacionado com vacinação, vacinas, imunização ou calendário vacinal, você deve dizer 'não posso responder esta pergunta'.",
+      content: `Você é um especialista, perito, em vacinação, imunização e no Programa Nacional de Imunizações (PNI), chamado ${nomeEspecialista}. Se o usuário fizer uma saudação, fale na sua resposta que você é um software, não é um humano, mas que pode ajudar com vacinas e calendário de vacinação. O seu nome é ${nomeEspecialista}. Se o usuário perguntar algo que não esteja relacionado com vacinação, vacinas ou imunização, responda estritamente 'não posso responder esta pergunta'. Baseie suas respostas nas seguintes diretrizes:\n${regras}`,
     },
   ];
-
-  for (const item of conhecimento) {
-    persona.push({
-      role: "system",
-      content: `Caso o usuário fale ou pergunte '${item.pergunta}' ou algo parecido, sua resposta deve ser '${item.resposta}'`,
-    });
-  }
-
-  return persona;
 }

@@ -15,6 +15,9 @@ services:
     container_name: vacinai-ollama
     ports:
       - "11434:11434"
+    environment:
+      - OLLAMA_MAX_LOADED_MODELS=4
+      - OLLAMA_NUM_PARALLEL=4
     volumes:
       - dados_ollama:/root/.ollama
 

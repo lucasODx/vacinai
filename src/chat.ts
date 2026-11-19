@@ -69,7 +69,9 @@ async function executar(): Promise<void> {
         },
       ];
 
+      process.stdout.write("🤖 Pensando...");
       const { sucesso, resposta: respostaLLM } = await obterResposta(mensagensParaLLM);
+      process.stdout.write("\r\x1b[K");
 
       if (sucesso && respostaLLM) {
         console.log(`🤖 ${respostaLLM} [resposta do llm]`);

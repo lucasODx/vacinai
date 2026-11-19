@@ -14,30 +14,6 @@ O **Vacinaí** é um assistente especialista desenvolvido em **Node.js** e **Typ
 4. **Base de Conhecimento Estruturada**: Base com dezenas de perguntas e respostas autoritativas sobre o calendário oficial do SUS em `conhecimento/vacinacao.json`.
 5. **Avaliação LLM-as-a-Judge**: Script para avaliar o desempenho e a precisão do assistente especialista (`qwen2.5:0.5b`) utilizando um modelo juiz (`qwen2.5:1.5b`), testando alucinações propositais e gerando métricas de adequação.
 
----
-
-## Estrutura do Projeto
-
-```text
-vacinai/
-├── conhecimento/
-│   └── vacinacao.json      # Base com perguntas e respostas oficiais do PNI
-├── src/
-│   ├── tipos.ts            # Definições de tipos e interfaces em TypeScript
-│   ├── conhecimento.ts     # Carregamento da base e construção da persona
-│   ├── llm.ts              # Motor de inferência conectado ao Ollama
-│   ├── cache.ts            # Cache semântico integrado ao ChromaDB
-│   ├── chat.ts             # Interface interativa de conversação no terminal
-│   └── julgamento.ts       # Script de avaliação com LLM-as-a-Judge
-├── docker-compose.yml      # Definição dos containers ChromaDB e Ollama
-├── .env.example            # Modelo de configuração das variáveis de ambiente
-├── .env                    # Variáveis de ambiente locais
-├── package.json            # Scripts de execução e dependências
-└── tsconfig.json           # Configurações do compilador TypeScript
-```
-
----
-
 ## Como Subir e Preparar os Containers
 
 O projeto inclui um arquivo `docker-compose.yml` pré-configurado com os serviços necessários:
